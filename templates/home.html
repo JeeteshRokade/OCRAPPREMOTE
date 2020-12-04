@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jeetesh OCR</title>
+</head>
+<body>
+<h2 align="center">Jeetesh OCR</h2>
+<p>Upload a File</p>
+ <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+
+<p> {{msg}}</p>
+{%if img_src %}
+<img src="{{file_path}}" alt="image" >
+{%endif%}
+
+{%if text %}
+<p>{{text}}</p>
+{%endif%}
+
+
+
+
+</body>
+</html>
