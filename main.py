@@ -72,17 +72,7 @@ def upload_file():
             text = ocr_core(file_path)
             return render_template("home.html",msg="File selected",text=text,img_src = file_path)
 
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
-
-
+ 
 
 
 
