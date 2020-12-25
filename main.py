@@ -41,20 +41,11 @@ def allowed_file(filename):
 
 
 
-
-@app.route("/" )
-def home():
-    return render_template("home.html")
-
-
-
-
-
-
-@app.route('/home', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
+    if request.method == "GET":
+        return render_template("home.html")
+    elif request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
             # flash('No file part')
