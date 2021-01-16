@@ -14,11 +14,19 @@
 
 <p> {{msg}}</p>
 {%if img_src %}
-<img src="{{file_path}}" alt="image" >
+<img src="{{img_src}}" height="300em" width="500em" alt="image" >
 {%endif%}
 
 {%if text %}
 <p>{{text}}</p>
+{%endif%}
+
+{%if audiopath %}
+<p> Audio:</p>
+<audio controls>
+  <source src="static/audio1.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
 {%endif%}
 
 
