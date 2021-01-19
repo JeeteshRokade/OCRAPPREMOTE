@@ -7,6 +7,7 @@ import pytesseract
 from gtts import gTTS
 import os
 from io import BytesIO
+from datetime import datetime
 from playsound import playsound
 
 mp3_fp = BytesIO()
@@ -67,18 +68,32 @@ def upload_file():
             return render_template("home.html",msg = msg )
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            filename = add_timestamp_filename(filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            file_path = UPLOAD_FOLDER + file.filename
+            file_path = UPLOAD_FOLDER + filename
             text = ocr_core(file_path)
             audiopath = convert_to_audio(text)
             print(audiopath," | ",file_path)
             return render_template("home.html",msg="File selected",text=text,img_src = file_path,audiopath=audiopath)
 
- 
+
+def add_timestamp_filename(filename):
+    filename = filename.split(".")
+    file = filename[0]
+    file_ext = filename[1]
+    now = datetime.now();
+    timestamp = str(now.timestamp());
+    timestamp = timestamp.replace(".", "")
+    filename = file + timestamp + "." + file_ext
+
+    return filename
+
+
 def convert_to_audio(text):
     audio = gTTS(text=text, lang="en", slow=False)
-    audio.save(os.path.join(app.config['UPLOAD_FOLDER'], "audio1.mp3"))
-    audiopath = "static/audio1.mp3"
+    audiofilename = add_timestamp_filename("audio.mp3")
+    audio.save(os.path.join(app.config['UPLOAD_FOLDER'], audiofilename))
+    audiopath = "static/"+audiofilename
     # playsound(os.path.join(app.config['UPLOAD_FOLDER'], "audio.mp3"))
 
     return audiopath
