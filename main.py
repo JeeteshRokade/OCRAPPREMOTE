@@ -9,6 +9,7 @@ import os
 from io import BytesIO
 from datetime import datetime
 from playsound import playsound
+from pdf2image import convert_from_path
 
 mp3_fp = BytesIO()
 
@@ -48,7 +49,11 @@ def ocr_core(file):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+def pdf_to_image(filepath):
+    images = convert_from_path(filepath, 500, poppler_path=r'D:\poppler-0.68.0\bin')
+    for i, image in enumerate(images):
+        fname = 'image' + str(i) + '.png'
+        image.save(fname, "PNG")
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
